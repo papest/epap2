@@ -9,9 +9,9 @@ public class Avito_HW {
     public static void main(String[] args) {
         System.setProperty("webdriver.chrome.driver","/Users/peia/Webdriver/chromedriver");
         WebDriver driver=new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         driver.get("https://www.avito.ru/");
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 
         Select category= new Select(driver.findElement(By.id("category")));
@@ -22,6 +22,7 @@ public class Avito_HW {
 
         WebElement params2= driver.findElement(By.className("main-text-2PaZG"));
         params2.click();
+
         WebElement params3=driver.findElement(By.className("suggest-input-3p8yi"));
         params3.sendKeys("Владивосток");
         params3.click();
@@ -29,16 +30,14 @@ public class Avito_HW {
         region.click();
         driver.findElement(By.cssSelector("[data-marker=\"popup-location/save-button\"]")).click();
 
-        driver.findElement(By.className("main-text-2PaZG")).click();
-        params3=driver.findElement(By.className("suggest-input-3p8yi"));
-        params3.sendKeys("Владивосток");
-        params3.click();
-        driver.findElement(By.cssSelector("[data-marker=\"suggest(0)\"]")).click();
-        WebElement checkbox= driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[2]/div[2]/div/div[6]/div/div/span/div/div[3]/div[1]/label/span" ));
+
+        WebElement checkbox= driver.findElement(By.xpath("/html/body/div[1]/div[3]/div[3]/div[1]/div/div[2]/div[1]/form/div[8]/div/div/div/div/div/div/label" ));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", checkbox);
         if (!checkbox.isSelected()){
-            checkbox.click();
+                checkbox.click();
         }
-        driver.findElement(By.cssSelector("[data-marker=\"popup-location/save-button\"]")).click();
+        WebElement saveButton=driver.findElement(By.cssSelector("[data-marker=\"search-filters/submit-button\"]"));
+        saveButton.click();
 
         Select price= new Select(driver.findElement(By.xpath("/html/body/div[1]/div[3]/div[3]/div[3]/div[1]/div[2]/select")));
         price.selectByVisibleText("Дороже");
