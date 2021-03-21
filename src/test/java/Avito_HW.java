@@ -7,7 +7,9 @@ import java.util.concurrent.TimeUnit;
 
 public class Avito_HW {
     public static void main(String[] args) {
-        System.setProperty("webdriver.chrome.driver","/Users/peia/Webdriver/chromedriver");
+        System.setProperty("webdriver.chrome.driver","src/test/resources/Webdriver/chromedriver");
+        // Драйвер для Windows
+        //  System.setProperty("webdriver.chrome.driver","src/test/resources/Webdriver/chromedriver.exe");
         WebDriver driver=new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
