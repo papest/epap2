@@ -15,42 +15,56 @@ public class Avito_HW {
 
         driver.get("https://www.avito.ru/");
 
+        String id="category";
+        Select category= new Select(driver.findElement(By.id(id)));
+        String Value="99";
+        category.selectByValue(Value);
+        id="search";
+        WebElement search=driver.findElement(By.id(id));
+        String sendKeys="Принтер";
+        search.sendKeys(sendKeys);
+        String className="main-text-2PaZG";
+        WebElement param= driver.findElement(By.className(className));
+        param.click();
 
-        Select category= new Select(driver.findElement(By.id("category")));
-        category.selectByValue("99");
-
-        WebElement params1=driver.findElement(By.id("search"));
-        params1.sendKeys("Принтер");
-
-        WebElement params2= driver.findElement(By.className("main-text-2PaZG"));
-        params2.click();
-
-        WebElement params3=driver.findElement(By.className("suggest-input-3p8yi"));
-        params3.sendKeys("Владивосток");
+        className="suggest-input-3p8yi";
+        WebElement params3=driver.findElement(By.className(className));
+        sendKeys="Владивосток";
+        params3.sendKeys(sendKeys);
         params3.click();
-        WebElement region=driver.findElement(By.cssSelector("[data-marker=\"suggest(0)\"]"));
+        String cssSelector="[data-marker=\"suggest(0)\"]";
+        WebElement region=driver.findElement(By.cssSelector(cssSelector));
         region.click();
-        driver.findElement(By.cssSelector("[data-marker=\"popup-location/save-button\"]")).click();
+        cssSelector="[data-marker=\"popup-location/save-button\"]";
+        driver.findElement(By.cssSelector(cssSelector)).click();
 
-
-        WebElement checkbox= driver.findElement(By.xpath("/html/body/div[1]/div[3]/div[3]/div[1]/div/div[2]/div[1]/form/div[8]/div/div/div/div/div/div/label" ));
+        String xpath="//form/div[8]/div/div/div/div/div/div/label";
+        WebElement checkbox= driver.findElement(By.xpath(xpath));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", checkbox);
         if (!checkbox.isSelected()){
                 checkbox.click();
         }
-        WebElement saveButton=driver.findElement(By.cssSelector("[data-marker=\"search-filters/submit-button\"]"));
+        cssSelector="[data-marker=\"search-filters/submit-button\"]";
+        WebElement saveButton=driver.findElement(By.cssSelector(cssSelector));
         saveButton.click();
 
-        Select price= new Select(driver.findElement(By.xpath("/html/body/div[1]/div[3]/div[3]/div[3]/div[1]/div[2]/select")));
-        price.selectByVisibleText("Дороже");
+        xpath="/html/body/div[1]/div[3]/div[3]/div[3]/div[1]/div[2]/select";
+        Select price= new Select(driver.findElement(By.xpath(xpath)));
+        String selectVisibleText="Дороже";
+        price.selectByVisibleText(selectVisibleText);
 
-        List<WebElement> items= driver.findElements(By.cssSelector("[data-marker=\"item\"]"));
+        cssSelector="[data-marker=\"item\"]";
+        List<WebElement> items= driver.findElements(By.cssSelector(cssSelector));
+        className="iva-item-titleStep-2bjuh";
+        String className1="iva-item-priceStep-2qRpg";
         int i=items.size();
         int k=3;
         if (k>i){ k=i; }
 
         for (int j=0;j<k;j++){
-            System.out.println("Название принтера "+items.get(j).findElement(By.className("iva-item-titleStep-2bjuh")).getText()+" Цена:"+items.get(j).findElement(By.className("iva-item-priceStep-2qRpg")).getText());
+            System.out.println("Название принтера "
+                    +items.get(j).findElement(By.className(className)).getText()+
+                    " Цена:"+items.get(j).findElement(By.className(className1)).getText());
         }
 
         driver.quit();
