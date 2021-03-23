@@ -10,8 +10,9 @@ public class Avito_HW {
         System.setProperty("webdriver.chrome.driver","src/test/resources/Webdriver/chromedriver");
         // Драйвер для Windows
         //  System.setProperty("webdriver.chrome.driver","src/test/resources/Webdriver/chromedriver.exe");
+
         WebDriver driver=new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 
         driver.get("https://www.avito.ru/");
 
@@ -19,16 +20,19 @@ public class Avito_HW {
         Select category= new Select(driver.findElement(By.id(id)));
         String Value="99";
         category.selectByValue(Value);
-        id="search";
-        WebElement search=driver.findElement(By.id(id));
+
+        String printer= "[type=\"text\"][data-marker=\"search-form/suggest\"]";
+        WebElement search=driver.findElement(By.cssSelector(printer));
         String sendKeys="Принтер";
         search.sendKeys(sendKeys);
-        String className="main-text-2PaZG";
-        WebElement param= driver.findElement(By.className(className));
+
+        String searchForm="[data-marker=\"search-form/region\"]";
+        WebElement param=driver.findElement(By.cssSelector(searchForm));
         param.click();
 
-        className="suggest-input-3p8yi";
-        WebElement params3=driver.findElement(By.className(className));
+
+        String city="[placeholder=\"Город, регион или Россия\"]";
+        WebElement params3=driver.findElement(By.cssSelector(city));
         sendKeys="Владивосток";
         params3.sendKeys(sendKeys);
         params3.click();
@@ -38,7 +42,8 @@ public class Avito_HW {
         cssSelector="[data-marker=\"popup-location/save-button\"]";
         driver.findElement(By.cssSelector(cssSelector)).click();
 
-        String xpath="//form/div[8]/div/div/div/div/div/div/label";
+
+        String xpath="//*[text()=\"С Авито Доставкой\"]";
         WebElement checkbox= driver.findElement(By.xpath(xpath));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", checkbox);
         if (!checkbox.isSelected()){
@@ -48,23 +53,23 @@ public class Avito_HW {
         WebElement saveButton=driver.findElement(By.cssSelector(cssSelector));
         saveButton.click();
 
-        xpath="/html/body/div[1]/div[3]/div[3]/div[3]/div[1]/div[2]/select";
+        xpath="//div[2]/select";
         Select price= new Select(driver.findElement(By.xpath(xpath)));
         String selectVisibleText="Дороже";
         price.selectByVisibleText(selectVisibleText);
 
         cssSelector="[data-marker=\"item\"]";
         List<WebElement> items= driver.findElements(By.cssSelector(cssSelector));
-        className="iva-item-titleStep-2bjuh";
-        String className1="iva-item-priceStep-2qRpg";
+        String printerName="h3[itemprop=\"name\"]";
+        String printerPrice="[data-marker=\"item-price\"]";
         int i=items.size();
         int k=3;
         if (k>i){ k=i; }
 
         for (int j=0;j<k;j++){
             System.out.println("Название принтера "
-                    +items.get(j).findElement(By.className(className)).getText()+
-                    " Цена:"+items.get(j).findElement(By.className(className1)).getText());
+                    +items.get(j).findElement(By.cssSelector(printerName)).getText()+
+                    " Цена:"+items.get(j).findElement(By.cssSelector(printerPrice)).getText());
         }
 
         driver.quit();
