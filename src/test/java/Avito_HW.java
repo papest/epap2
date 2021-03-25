@@ -5,11 +5,13 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.Thread.sleep;
+
 public class Avito_HW {
-    public static void main(String[] args) {
-        System.setProperty("webdriver.chrome.driver","src/test/resources/Webdriver/chromedriver");
+    public static void main(String[] args) throws InterruptedException {
+        System.setProperty("webdriver.chrome.driver","src/test/resources/webdriver/chromedriver");
         // Драйвер для Windows
-        //  System.setProperty("webdriver.chrome.driver","src/test/resources/Webdriver/chromedriver.exe");
+        //  System.setProperty("webdriver.chrome.driver","src/test/resources/webdriver/chromedriver.exe");
 
         WebDriver driver=new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
@@ -20,6 +22,8 @@ public class Avito_HW {
         Select category= new Select(driver.findElement(By.id(id)));
         String Value="99";
         category.selectByValue(Value);
+
+
 
         String printer= "[type=\"text\"][data-marker=\"search-form/suggest\"]";
         WebElement search=driver.findElement(By.cssSelector(printer));
@@ -36,6 +40,7 @@ public class Avito_HW {
         sendKeys="Владивосток";
         params3.sendKeys(sendKeys);
         params3.click();
+        sleep(1000);
         String cssSelector="[data-marker=\"suggest(0)\"]";
         WebElement region=driver.findElement(By.cssSelector(cssSelector));
         region.click();
